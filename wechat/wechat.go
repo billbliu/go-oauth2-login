@@ -60,6 +60,11 @@ func (p *Provider) ProviderType() gooauth.ProviderType {
 	return p.providerType
 }
 
+func (p *Provider) GetAuthorizeURL(state string) string {
+	return fmt.Sprintf("%s?appid=%s&redirect_uri=%s&response_type=code&state=%s&scope=snsapi_userinfo#wechat_redirect",
+		p.config.Endpoint.AuthURL, p.config.ClientID, p.config.RedirectURL, state)
+}
+
 func (p *Provider) FetchToken(code string) (*oauth2.Token, string, error) {
 	params := url.Values{}
 	params.Add("appid", p.config.ClientID)

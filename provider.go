@@ -18,6 +18,7 @@ const (
 // e.g. Facebook, Twitter, etc...
 type Provider interface {
 	ProviderType() ProviderType
+	GetAuthorizeURL(state string) string
 	FetchToken(code string) (*oauth2.Token, string, error)
 	FetchUser(token *oauth2.Token, openid string) (User, error)
 }
