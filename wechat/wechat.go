@@ -161,7 +161,7 @@ func (p *Provider) userFromReader(r io.Reader, user *gooauth.User) error {
 		return fmt.Errorf("CODE: %d, MSG: %s", u.Code, u.Msg)
 	}
 
-	user.Email = fmt.Sprintf("%s@wechat.com", u.Openid)
+	// user.Email = u.Email
 	user.Name = u.Nickname
 	user.UserID = u.Openid
 	user.NickName = u.Nickname
