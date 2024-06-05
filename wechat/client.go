@@ -42,6 +42,8 @@ type Client struct {
 	AppAccessTokenURL string
 	// 获取二维码ticket url
 	QrTicketURL string
+	// 获取二维码登录图片 url
+	QrLoginURL string
 	// 用户授权url
 	UserAuthorizeURL string
 	// 获取用户授权token url
@@ -83,6 +85,7 @@ func New(appID, appSecret, appToken, redirectURL string, qrValidTime int, lang W
 
 		AppAccessTokenURL: "https://api.weixin.qq.com/cgi-bin/token",
 		QrTicketURL:       "https://api.weixin.qq.com/cgi-bin/qrcode/create",
+		QrLoginURL:        "https://mp.weixin.qq.com/cgi-bin/showqrcode",
 
 		UserAuthorizeURL:   "https://open.weixin.qq.com/connect/oauth2/authorize",
 		UserAccessTokenURL: "https://api.weixin.qq.com/sns/oauth2/access_token",
@@ -173,6 +176,13 @@ func (c *Client) GetQrTicketURL(appAccessToken string) string {
 	params.Add("access_token", appAccessToken)
 	return fmt.Sprintf("%s?%s",
 		c.QrTicketURL, params.Encode())
+}
+
+func (c *Client) GetQrLoginURL(ticket string) string {
+	params := url.Values{}
+	params.Add("ticket", ticket)
+	return fmt.Sprintf("%s?%s",
+		c.QrLoginURL, params.Encode())
 }
 
 func (c *Client) GetQRTicket(codeType string, sceneId int) (string, error) {
